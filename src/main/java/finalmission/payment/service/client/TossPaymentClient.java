@@ -13,7 +13,7 @@ import org.springframework.web.client.RestClient;
 @Component
 public class TossPaymentClient {
 
-    private static final String SECRET_KEY = "temp_key";
+    private static final String SECRET_KEY = "test_sk_zXLkKEypNArWmo50nX3lmeaxYG5R";
 
     private final RestClient restClient;
 

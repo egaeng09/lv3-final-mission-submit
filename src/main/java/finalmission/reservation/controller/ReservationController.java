@@ -3,6 +3,7 @@ package finalmission.reservation.controller;
 import finalmission.reservation.controller.dto.ReservationRequest;
 import finalmission.reservation.controller.dto.ReservationResponse;
 import finalmission.reservation.service.ReservationFrontService;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,5 +34,12 @@ public class ReservationController {
     @GetMapping
     public List<ReservationResponse> getAllReservation() {
         return reservationFrontService.getAll();
+    }
+
+    @GetMapping("/mine")
+    public ResponseEntity<ReservationResponse> getReservationMine(HttpServletRequest request) {
+        String cookie = request.getHeader("Cookie");
+        // reservationFrontService.getMine(cookie)
+        return ResponseEntity.ok().build();
     }
 }
