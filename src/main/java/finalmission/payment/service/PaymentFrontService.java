@@ -6,11 +6,10 @@ import finalmission.payment.service.client.dto.TossPaymentRequest;
 import finalmission.payment.service.client.dto.TossPaymentResponse;
 import finalmission.payment.service.detail.PaymentCommandService;
 import finalmission.payment.service.detail.PaymentQueryService;
+import finalmission.payment.service.dto.PaymentRequest;
 import finalmission.payment.service.dto.PaymentResponse;
-import finalmission.reservation.controller.dto.ReservationResponse;
 import finalmission.reservation.domain.Reservation;
 import finalmission.reservation.service.detail.ReservationQueryService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,7 @@ public class PaymentFrontService {
     private final TossPaymentClient tossPaymentClient;
     private final ReservationQueryService reservationQueryService;
 
-    public PaymentResponse create(final PaymentResponse request) {
+    public PaymentResponse create(final PaymentRequest request) {
         final TossPaymentRequest tossPaymentRequest= new TossPaymentRequest(
                 request.paymentKey(),
                 request.orderId(),
