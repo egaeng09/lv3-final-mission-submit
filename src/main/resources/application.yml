@@ -16,3 +16,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    defer-datasource-initialization: true
+
+
+payment:
+  key: DEV2DCA4FEB63365FB5CA62D7AE96906147C1C42
+  cid: TC0ONETIME

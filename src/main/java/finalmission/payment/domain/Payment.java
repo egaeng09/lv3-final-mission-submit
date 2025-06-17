@@ -22,11 +22,8 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 200)
-    private String paymentKey;
-
-    @Column(nullable = false, length = 64)
-    private String orderId;
+    @Column(nullable = false, unique = true)
+    private String tid;
 
     @Column(nullable = false)
     private Long amount;
@@ -39,32 +36,27 @@ public class Payment {
 
     private String approvedAt;
 
-    public Payment(final String paymentKey, final String orderId, final Long amount, final Reservation reservation) {
-        validate(paymentKey, orderId, amount, reservation);
-        this.paymentKey = paymentKey;
-        this.orderId = orderId;
+    public Payment(final String tid, final Long amount, final Reservation reservation) {
+        validate(tid, amount, reservation);
+        this.tid = tid;
         this.amount = amount;
         this.reservation = reservation;
     }
 
-    public Payment(final String paymentKey, final String orderId, final Long amount, final Reservation reservation,
+    public Payment(final String tid, final Long amount, final Reservation reservation,
                    final String requestedAt,
                    final String approvedAt) {
-        validate(paymentKey, orderId, amount, reservation);
-        this.paymentKey = paymentKey;
-        this.orderId = orderId;
+        validate(tid, amount, reservation);
+        this.tid = tid;
         this.amount = amount;
         this.reservation = reservation;
         this.requestedAt = requestedAt;
         this.approvedAt = approvedAt;
     }
 
-    public void validate(final String paymentKey, final String orderId, final Long amount, final Reservation reservation) {
-        if (paymentKey == null || paymentKey.isEmpty()) {
-            throw new IllegalArgumentException("paymentKey는 null이거나 빈 값일 수 없습니다.");
-        }
-        if (orderId == null || orderId.isEmpty()) {
-            throw new IllegalArgumentException("orderId는 null이거나 빈 값일 수 없습니다.");
+    public void validate(final String tid, final Long amount, final Reservation reservation) {
+        if (tid == null || tid.isEmpty()) {
+            throw new IllegalArgumentException("tid는 null이거나 빈 값일 수 없습니다.");
         }
         if (amount <= 0) {
             throw new IllegalArgumentException("amount는 0보다 커야 합니다.");

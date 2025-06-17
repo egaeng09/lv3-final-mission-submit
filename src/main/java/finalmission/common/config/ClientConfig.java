@@ -17,6 +17,6 @@ public class ClientConfig {
 
         return RestClient.builder()
                 .requestFactory(requestFactory)
-                .baseUrl("https://api.tosspayments.com/v1/payments").build();
+                .baseUrl("https://open-api.kakaopay.com/online/v1/payment").build();
     }
 }

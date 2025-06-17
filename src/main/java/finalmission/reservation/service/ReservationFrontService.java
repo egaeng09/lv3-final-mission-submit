@@ -5,8 +5,8 @@ import finalmission.concert.service.detail.ConcertQueryService;
 import finalmission.member.domain.Member;
 import finalmission.member.service.MemberQueryService;
 import finalmission.payment.service.PaymentFrontService;
-import finalmission.payment.service.dto.PaymentRequest;
-import finalmission.payment.service.dto.PaymentResponse;
+import finalmission.payment.service.dto.PaymentApproveRequest;
+import finalmission.payment.service.dto.PaymentApproveResponse;
 import finalmission.reservation.controller.dto.ReservationRequest;
 import finalmission.reservation.controller.dto.ReservationResponse;
 import finalmission.reservation.domain.Reservation;
@@ -43,12 +43,11 @@ public class ReservationFrontService {
         final Reservation reservation = new Reservation(member, concert, seat);
         final Reservation savedReservation = reservationCommandService.create(reservation);
 
-        final PaymentResponse paymentResponse = paymentFrontService.create(
-                new PaymentRequest(
-                        savedReservation.getId(),
-                        request.paymentKey(),
-                        request.orderId(),
-                        request.amount()
+        final PaymentApproveResponse paymentApproveResponse = paymentFrontService.approve(
+                new PaymentApproveRequest(
+                        request.tid(),
+                        request.pgToken(),
+                        savedReservation.getId()
                 )
         );
 

@@ -1,10 +1,9 @@
 package finalmission.payment.service.dto;
 
-public record PaymentResponse(
+public record PaymentApproveResponse(
         Long id,
         Long reservationId,
-        String paymentKey,
-        String orderId,
+        String tid,
         Long amount
 ) {
 }

@@ -14,7 +14,7 @@ public class FakePaymentRepository implements PaymentRepository {
 
     @Override
     public Payment save(final Payment payment) {
-        final Payment saved = new Payment(atomicLong.getAndIncrement(), payment.getPaymentKey(), payment.getOrderId(), payment.getAmount(), payment.getReservation(), null, null);
+        final Payment saved = new Payment(atomicLong.getAndIncrement(), payment.getTid(), payment.getAmount(), payment.getReservation(), null, null);
         payments.add(saved);
         return saved;
     }
