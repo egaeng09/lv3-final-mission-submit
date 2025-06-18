@@ -40,6 +40,7 @@ public class SeatController {
         return ResponseEntity.ok(seatFrontService.getSeatsWithReserved(concertId));
     }
 
+    @RoleRequired(value = Role.ADMIN)
     @GetMapping
     public List<SeatResponse> getAllSeat() {
         return seatFrontService.getAll();

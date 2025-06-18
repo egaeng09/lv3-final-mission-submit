@@ -3,6 +3,7 @@ package finalmission.concert.controller;
 import finalmission.concert.controller.dto.ConcertRequest;
 import finalmission.concert.controller.dto.ConcertResponse;
 import finalmission.concert.service.ConcertFrontService;
+import finalmission.member.auth.annotation.PermitAll;
 import finalmission.member.auth.annotation.RoleRequired;
 import finalmission.member.domain.Role;
 import java.util.List;
@@ -28,16 +29,19 @@ public class ConcertController {
         return ResponseEntity.ok(concertFrontService.create(request));
     }
 
+    @PermitAll
     @GetMapping("/{id}")
     public ResponseEntity<ConcertResponse> getConcert(@PathVariable final Long id) {
         return ResponseEntity.ok(concertFrontService.get(id));
     }
 
+    @PermitAll
     @GetMapping
     public List<ConcertResponse> getAllConcert() {
         return concertFrontService.getAll();
     }
 
+    @PermitAll
     @GetMapping("/before")
     public List<ConcertResponse> getAllConcertCanReserve() {
         return concertFrontService.getConcertsCanReserve();
