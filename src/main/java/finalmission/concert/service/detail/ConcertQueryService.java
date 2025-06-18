@@ -1,8 +1,10 @@
 package finalmission.concert.service.detail;
 
 import finalmission.common.exception.InvalidInputException;
+import finalmission.concert.controller.dto.ConcertResponse;
 import finalmission.concert.domain.Concert;
 import finalmission.concert.repository.ConcertRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,5 +22,9 @@ public class ConcertQueryService {
 
     public List<Concert> getAll() {
         return concertRepository.findAll();
+    }
+
+    public List<Concert> getAllBefore(final LocalDateTime targetDateTime) {
+        return concertRepository.findByConcertDateBefore(targetDateTime);
     }
 }
