@@ -3,6 +3,8 @@ package finalmission.concert.controller;
 import finalmission.concert.controller.dto.ConcertRequest;
 import finalmission.concert.controller.dto.ConcertResponse;
 import finalmission.concert.service.ConcertFrontService;
+import finalmission.member.auth.annotation.RoleRequired;
+import finalmission.member.domain.Role;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ public class ConcertController {
 
     private final ConcertFrontService concertFrontService;
 
+    @RoleRequired(value = Role.ADMIN)
     @PostMapping
     public ResponseEntity<ConcertResponse> createConcert(@RequestBody final ConcertRequest request) {
         return ResponseEntity.ok(concertFrontService.create(request));

@@ -1,5 +1,7 @@
 package finalmission.venue.controller;
 
+import finalmission.member.auth.annotation.RoleRequired;
+import finalmission.member.domain.Role;
 import finalmission.venue.controller.dto.VenueRequest;
 import finalmission.venue.controller.dto.VenueResponse;
 import finalmission.venue.service.VenueFrontService;
@@ -20,6 +22,7 @@ public class VenueController {
 
     private final VenueFrontService venueFrontService;
 
+    @RoleRequired(value = Role.ADMIN)
     @PostMapping
     public ResponseEntity<VenueResponse> createVenue(@RequestBody final VenueRequest request) {
         return ResponseEntity.ok(venueFrontService.create(request));

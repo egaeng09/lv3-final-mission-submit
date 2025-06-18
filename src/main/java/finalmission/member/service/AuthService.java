@@ -48,7 +48,8 @@ public class AuthService {
         return new MemberInfo(
                 member.getId(),
                 member.getEmail(),
-                member.getName()
+                member.getName(),
+                member.getRole()
         );
     }
 }

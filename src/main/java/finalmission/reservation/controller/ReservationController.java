@@ -1,7 +1,10 @@
 package finalmission.reservation.controller;
 
 import finalmission.member.auth.annotation.LoginMember;
+import finalmission.member.auth.annotation.RoleRequired;
 import finalmission.member.auth.vo.MemberInfo;
+import finalmission.member.domain.Role;
+import finalmission.reservation.controller.dto.ReservationDetailResponse;
 import finalmission.reservation.controller.dto.ReservationRequest;
 import finalmission.reservation.controller.dto.ReservationResponse;
 import finalmission.reservation.service.ReservationFrontService;
@@ -35,14 +38,14 @@ public class ReservationController {
         return ResponseEntity.ok(reservationFrontService.get(id));
     }
 
+    @RoleRequired(value = Role.ADMIN)
     @GetMapping
     public List<ReservationResponse> getAllReservation() {
         return reservationFrontService.getAll();
     }
 
     @GetMapping("/mine")
-    public ResponseEntity<List<ReservationResponse>> getReservationMine(@LoginMember final MemberInfo memberInfo) {
-        reservationFrontService.get(memberInfo);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<ReservationDetailResponse>> getReservationMine(@LoginMember final MemberInfo memberInfo) {
+        return ResponseEntity.ok(reservationFrontService.get(memberInfo));
     }
 }
