@@ -28,7 +28,7 @@ public class MemberInfoArgumentResolver implements HandlerMethodArgumentResolver
                                       final NativeWebRequest webRequest,
                                       final WebDataBinderFactory binderFactory) {
 
-        HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
+        final HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         final String token = jwtExtractor.extractToken(request.getCookies());
         return authService.get(token);
     }

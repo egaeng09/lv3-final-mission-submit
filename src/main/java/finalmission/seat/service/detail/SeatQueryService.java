@@ -5,8 +5,6 @@ import finalmission.concert.domain.Concert;
 import finalmission.seat.domain.Seat;
 import finalmission.seat.repository.SeatRepository;
 import finalmission.seat.repository.vo.SeatWithReserved;
-import finalmission.venue.domain.Venue;
-import finalmission.venue.repository.VenueRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
