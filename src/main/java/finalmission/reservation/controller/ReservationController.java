@@ -1,9 +1,10 @@
 package finalmission.reservation.controller;
 
+import finalmission.member.auth.annotation.LoginMember;
+import finalmission.member.auth.vo.MemberInfo;
 import finalmission.reservation.controller.dto.ReservationRequest;
 import finalmission.reservation.controller.dto.ReservationResponse;
 import finalmission.reservation.service.ReservationFrontService;
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,11 @@ public class ReservationController {
     private final ReservationFrontService reservationFrontService;
 
     @PostMapping
-    public ResponseEntity<ReservationResponse> createReservation(@RequestBody final ReservationRequest request) {
-        return ResponseEntity.ok(reservationFrontService.create(request));
+    public ResponseEntity<ReservationResponse> createReservation(
+            @LoginMember final MemberInfo memberInfo,
+            @RequestBody final ReservationRequest request
+    ) {
+        return ResponseEntity.ok(reservationFrontService.create(memberInfo, request));
     }
 
     @GetMapping("/{id}")
@@ -37,9 +41,8 @@ public class ReservationController {
     }
 
     @GetMapping("/mine")
-    public ResponseEntity<ReservationResponse> getReservationMine(HttpServletRequest request) {
-        String cookie = request.getHeader("Cookie");
-        // reservationFrontService.getMine(cookie)
+    public ResponseEntity<List<ReservationResponse>> getReservationMine(@LoginMember final MemberInfo memberInfo) {
+        reservationFrontService.get(memberInfo);
         return ResponseEntity.ok().build();
     }
 }

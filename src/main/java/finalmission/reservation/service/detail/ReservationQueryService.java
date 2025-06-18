@@ -5,6 +5,7 @@ import finalmission.concert.domain.Concert;
 import finalmission.reservation.domain.Reservation;
 import finalmission.reservation.repository.ReservationRepository;
 import finalmission.seat.domain.Seat;
+import java.util.Collection;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,9 @@ public class ReservationQueryService {
 
     public boolean existsByConcertAndSeat(final Concert concert, final Seat seat) {
         return reservationRepository.existsByConcertAndSeat(concert, seat);
+    }
+
+    public List<Reservation> getByMemberId(final Long memberId) {
+        return reservationRepository.findByMemberId(memberId);
     }
 }
