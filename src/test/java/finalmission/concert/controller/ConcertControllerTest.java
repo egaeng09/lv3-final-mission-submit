@@ -88,4 +88,14 @@ class ConcertControllerTest {
                 .then().log().all()
                 .statusCode(200);
     }
+
+    @Test
+    void 시작_전인_콘서트를_조회한다() {
+        RestAssured.given().log().all()
+                .cookie("token", memberToken)
+                .contentType(ContentType.JSON)
+                .when().get("/concerts/before")
+                .then().log().all()
+                .statusCode(200);
+    }
 }

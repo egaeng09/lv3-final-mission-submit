@@ -7,6 +7,7 @@ import finalmission.concert.service.detail.ConcertCommandService;
 import finalmission.concert.service.detail.ConcertQueryService;
 import finalmission.venue.domain.Venue;
 import finalmission.venue.service.detail.VenueQueryService;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,21 @@ public class ConcertFrontService {
 
     public List<ConcertResponse> getAll() {
         return concertQueryService.getAll().stream()
+                .map(concert -> new ConcertResponse(
+                        concert.getId(),
+                        concert.getTitle(),
+                        concert.getArtist(),
+                        concert.getConcertDate(),
+                        concert.getVenue().getId(),
+                        concert.getPrice(),
+                        concert.getDescription()
+                ))
+                .toList();
+    }
+
+    public List<ConcertResponse> getConcertsCanReserve() {
+        final LocalDateTime targetDateTime = LocalDateTime.now();
+        return concertQueryService.getAllBefore(targetDateTime).stream()
                 .map(concert -> new ConcertResponse(
                         concert.getId(),
                         concert.getTitle(),

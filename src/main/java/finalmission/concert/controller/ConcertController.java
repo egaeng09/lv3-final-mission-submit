@@ -37,4 +37,9 @@ public class ConcertController {
     public List<ConcertResponse> getAllConcert() {
         return concertFrontService.getAll();
     }
+
+    @GetMapping("/before")
+    public List<ConcertResponse> getAllConcertCanReserve() {
+        return concertFrontService.getConcertsCanReserve();
+    }
 }
