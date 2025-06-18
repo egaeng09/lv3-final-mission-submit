@@ -1,6 +1,9 @@
 package finalmission.member.controller;
 
 import finalmission.member.controller.dto.LoginRequest;
+import finalmission.member.controller.dto.SignupRequest;
+import finalmission.member.controller.dto.MemberResponse;
+import finalmission.member.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +15,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
+    private final AuthService authService;
+
+    @PostMapping("/signup")
+    public ResponseEntity<MemberResponse> signup(@RequestBody final SignupRequest request) {
+        return ResponseEntity.ok(authService.signup(request));
+    }
+
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest) {
-        HttpHeaders headers = new HttpHeaders();
-        // TODO: 로그인 기능 구현
-        //       임시로 Token 대신 사용자의 이름을 사용
-        headers.add("Set-Cookie", "token=" + loginRequest.name() + "; Path=/; HttpOnly");
+        final String token = authService.login(loginRequest);
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Set-Cookie", "token=" + token + "; Path=/; HttpOnly");
+        headers.add("Keep-Alive", "timeout=60");
+        return ResponseEntity.ok().headers(headers).build();
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Set-Cookie", "token=; Path=/; HttpOnly; Max-Age=0");
         return ResponseEntity.ok().headers(headers).build();
     }
 }

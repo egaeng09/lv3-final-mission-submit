@@ -4,7 +4,7 @@ import finalmission.common.exception.AlreadyExistException;
 import finalmission.concert.domain.Concert;
 import finalmission.concert.service.detail.ConcertQueryService;
 import finalmission.member.domain.Member;
-import finalmission.member.service.MemberQueryService;
+import finalmission.member.service.detail.MemberQueryService;
 import finalmission.payment.service.PaymentFrontService;
 import finalmission.payment.service.dto.PaymentApproveRequest;
 import finalmission.payment.service.dto.PaymentApproveResponse;

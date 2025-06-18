@@ -1,9 +1,10 @@
-package finalmission.member.service.detail;
+package finalmission.member.service;
 
-import finalmission.member.controller.dto.MemberRequest;
+import finalmission.member.controller.dto.SignupRequest;
 import finalmission.member.controller.dto.MemberResponse;
 import finalmission.member.domain.Member;
-import finalmission.member.service.MemberQueryService;
+import finalmission.member.service.detail.MemberCommandService;
+import finalmission.member.service.detail.MemberQueryService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,26 +13,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class MemberFrontService {
 
-    private final MemberCommandService memberCommandService;
     private final MemberQueryService memberQueryService;
-
-    public MemberResponse create(final MemberRequest request) {
-        final Member member = new Member(request.name());
-
-        final Member savedMember = memberCommandService.create(member);
-
-        return new MemberResponse(
-                savedMember.getId(),
-                savedMember.getName()
-        );
-    }
 
     public MemberResponse get(Long id) {
         final Member member = memberQueryService.get(id);
 
         return new MemberResponse(
                 member.getId(),
-                member.getName()
+                member.getName(),
+                member.getEmail()
         );
     }
 
@@ -39,7 +29,8 @@ public class MemberFrontService {
         return memberQueryService.getAll().stream()
                 .map(member -> new MemberResponse(
                         member.getId(),
-                        member.getName()
+                        member.getName(),
+                        member.getEmail()
                 ))
                 .toList();
     }
