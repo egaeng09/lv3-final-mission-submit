@@ -14,4 +14,8 @@ public class PaymentCommandService {
     public Payment create(final Payment payment) {
         return paymentRepository.save(payment);
     }
+
+    public void delete(final Payment payment) {
+        paymentRepository.delete(payment);
+    }
 }

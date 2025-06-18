@@ -20,4 +20,6 @@ public interface ReservationRepository {
     List<ReservationDetailResponse> findDetailsByMemberId(Long memberId);
 
     boolean existsByConcertAndSeat(Concert concert, Seat seat);
+
+    void delete(Reservation reservation);
 }

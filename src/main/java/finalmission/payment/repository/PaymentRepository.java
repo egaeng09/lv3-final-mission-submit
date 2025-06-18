@@ -11,4 +11,8 @@ public interface PaymentRepository {
     Optional<Payment> findById(Long id);
 
     List<Payment> findAll();
+
+    void delete(Payment payment);
+
+    Optional<Payment> findByReservationId(Long reservationId);
 }

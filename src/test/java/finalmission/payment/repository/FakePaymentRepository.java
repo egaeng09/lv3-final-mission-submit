@@ -30,4 +30,16 @@ public class FakePaymentRepository implements PaymentRepository {
     public List<Payment> findAll() {
         return new ArrayList<>(payments);
     }
+
+    @Override
+    public void delete(final Payment payment) {
+        payments.remove(payment);
+    }
+
+    @Override
+    public Optional<Payment> findByReservationId(final Long reservationId) {
+        return payments.stream()
+                .filter(payment -> payment.getReservation().getId().equals(reservationId))
+                .findFirst();
+    }
 }

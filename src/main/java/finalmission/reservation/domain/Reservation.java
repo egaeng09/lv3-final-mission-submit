@@ -40,6 +40,13 @@ public class Reservation {
         this.seat = seat;
     }
 
+    public void changeSeat(final Seat seat) {
+        if (seat == null) {
+            throw new InvalidInputException("좌석은 null일 수 없습니다.");
+        }
+        this.seat = seat;
+    }
+
     private void validate(final Member member, final Concert concert, final Seat seat) {
         if (member == null) {
             throw new InvalidInputException("예약자는 null일 수 없습니다.");

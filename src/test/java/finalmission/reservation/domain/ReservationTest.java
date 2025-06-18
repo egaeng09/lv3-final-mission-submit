@@ -8,6 +8,7 @@ import finalmission.venue.domain.Venue;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -77,5 +78,29 @@ class ReservationTest {
                     .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("좌석은 null일 수 없습니다.");
         });
+    }
+
+    @Test
+    void 좌석을_변경할_수_있다() {
+        // Given
+        final Member member = new Member("siso", "siso@gmail.com", "123");
+        final Venue venue = new Venue("공연장", "서울쓰");
+        final Concert concert = new Concert(
+                "Rock Concert",
+                "시소",
+                LocalDateTime.now(),
+                venue,
+                10000L,
+                "amazing"
+        );
+        final Seat seat = new Seat(1, venue);
+        final Seat newSeat = new Seat(2, venue);
+        final Reservation reservation = new Reservation(member, concert, seat);
+
+        // When
+        reservation.changeSeat(newSeat);
+
+        // Then
+        assertThat(reservation.getSeat()).isEqualTo(newSeat);
     }
 }
