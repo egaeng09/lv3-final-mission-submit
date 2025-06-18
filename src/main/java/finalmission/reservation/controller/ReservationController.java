@@ -33,7 +33,7 @@ public class ReservationController {
             @LoginMember final MemberInfo memberInfo,
             @RequestBody final ReservationRequest request
     ) {
-        return ResponseEntity.ok(reservationFrontService.create(memberInfo, request));
+        return ResponseEntity.ok(reservationFrontService.create(memberInfo.id(), request));
     }
 
     @GetMapping("/{id}")
@@ -49,7 +49,7 @@ public class ReservationController {
 
     @GetMapping("/mine")
     public ResponseEntity<List<ReservationDetailResponse>> getReservationMine(@LoginMember final MemberInfo memberInfo) {
-        return ResponseEntity.ok(reservationFrontService.get(memberInfo));
+        return ResponseEntity.ok(reservationFrontService.getDetails(memberInfo.id()));
     }
 
     @PutMapping
