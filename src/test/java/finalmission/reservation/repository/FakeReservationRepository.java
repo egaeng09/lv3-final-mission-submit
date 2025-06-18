@@ -1,6 +1,7 @@
 package finalmission.reservation.repository;
 
 import finalmission.concert.domain.Concert;
+import finalmission.reservation.controller.dto.ReservationDetailResponse;
 import finalmission.reservation.domain.Reservation;
 import finalmission.seat.domain.Seat;
 import java.util.ArrayList;
@@ -37,6 +38,23 @@ public class FakeReservationRepository implements ReservationRepository {
     public List<Reservation> findByMemberId(final Long memberId) {
         return reservations.stream()
                 .filter(reservation -> reservation.getMember().getId().equals(memberId))
+                .toList();
+    }
+
+    @Override
+    public List<ReservationDetailResponse> findDetailsByMemberId(final Long memberId) {
+        return reservations.stream()
+                .filter(reservation -> reservation.getMember().getId().equals(memberId))
+                .map(reservation -> new ReservationDetailResponse(
+                        reservation.getId(),
+                        reservation.getConcert().getId(),
+                        reservation.getConcert().getTitle(),
+                        reservation.getConcert().getConcertDate(),
+                        reservation.getSeat().getId(),
+                        reservation.getSeat().getSeatNumber(),
+                        "temp_tid",
+                        reservation.getConcert().getPrice()
+                ))
                 .toList();
     }
 
