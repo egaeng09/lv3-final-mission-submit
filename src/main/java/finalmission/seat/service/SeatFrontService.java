@@ -1,8 +1,11 @@
 package finalmission.seat.service;
 
+import finalmission.concert.domain.Concert;
+import finalmission.concert.service.detail.ConcertQueryService;
 import finalmission.seat.controller.dto.SeatRequest;
 import finalmission.seat.controller.dto.SeatResponse;
 import finalmission.seat.domain.Seat;
+import finalmission.seat.repository.vo.SeatWithReserved;
 import finalmission.seat.service.detail.SeatCommandService;
 import finalmission.seat.service.detail.SeatQueryService;
 import finalmission.venue.domain.Venue;
@@ -18,6 +21,7 @@ public class SeatFrontService {
     private final SeatCommandService seatCommandService;
     private final SeatQueryService seatQueryService;
     private final VenueQueryService venueQueryService;
+    private final ConcertQueryService concertQueryService;
 
     public SeatResponse create(final SeatRequest request) {
         final Venue venue = venueQueryService.get(request.venueId());
@@ -54,5 +58,11 @@ public class SeatFrontService {
                         seat.getVenue().getId()
                 ))
                 .toList();
+    }
+
+    public List<SeatWithReserved> getSeatsWithReserved(final Long concertId) {
+        final Concert concert = concertQueryService.get(concertId);
+        return seatQueryService.getSeatsWithReserved(concert);
+
     }
 }

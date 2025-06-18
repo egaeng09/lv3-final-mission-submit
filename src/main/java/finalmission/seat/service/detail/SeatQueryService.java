@@ -1,8 +1,10 @@
 package finalmission.seat.service.detail;
 
 import finalmission.common.exception.NotFoundException;
+import finalmission.concert.domain.Concert;
 import finalmission.seat.domain.Seat;
 import finalmission.seat.repository.SeatRepository;
+import finalmission.seat.repository.vo.SeatWithReserved;
 import finalmission.venue.domain.Venue;
 import finalmission.venue.repository.VenueRepository;
 import java.util.List;
@@ -22,5 +24,9 @@ public class SeatQueryService {
 
     public List<Seat> getAll() {
         return seatRepository.findAll();
+    }
+
+    public List<SeatWithReserved> getSeatsWithReserved(final Concert concert) {
+        return seatRepository.findSeatsWithReservationStatusByIds(concert.getVenue().getId(), concert.getId());
     }
 }
