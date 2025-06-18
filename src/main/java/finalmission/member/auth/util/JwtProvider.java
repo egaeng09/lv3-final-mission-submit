@@ -16,14 +16,14 @@ public class JwtProvider {
     private String SECRET_KEY;
 
     @Value("${jwt.expiration}")
-    private String EXPIRATION_TIME;
+    private long EXPIRATION_TIME;
 
     public String generate(final Member member) {
         return Jwts.builder()
                 .setSubject(member.getId().toString())
                 .claim("name", member.getName())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(EXPIRATION_TIME)))
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
                 .compact();
     }
