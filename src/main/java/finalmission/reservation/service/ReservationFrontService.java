@@ -9,6 +9,7 @@ import finalmission.member.service.detail.MemberQueryService;
 import finalmission.payment.service.PaymentFrontService;
 import finalmission.payment.service.dto.PaymentApproveRequest;
 import finalmission.payment.service.dto.PaymentApproveResponse;
+import finalmission.reservation.controller.dto.ReservationDetailResponse;
 import finalmission.reservation.controller.dto.ReservationRequest;
 import finalmission.reservation.controller.dto.ReservationResponse;
 import finalmission.reservation.domain.Reservation;
@@ -83,14 +84,7 @@ public class ReservationFrontService {
                 .toList();
     }
 
-    public List<ReservationResponse> get(final MemberInfo memberInfo) {
-        return reservationQueryService.getByMemberId(memberInfo.id()).stream()
-                .map(reservation -> new ReservationResponse(
-                        reservation.getId(),
-                        reservation.getMember().getId(),
-                        reservation.getConcert().getId(),
-                        reservation.getSeat().getId()
-                ))
-                .toList();
+    public List<ReservationDetailResponse> get(final MemberInfo memberInfo) {
+        return reservationQueryService.getDetailByMemberId(memberInfo.id());
     }
 }
