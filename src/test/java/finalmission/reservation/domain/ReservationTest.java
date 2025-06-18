@@ -34,7 +34,7 @@ class ReservationTest {
     @Test
     void 예약의_예약자_콘서트_좌석이_null이_아니라면_예외가_발생하지_않는다() {
         // Given
-        final Member member = new Member("siso");
+        final Member member = new Member("siso", "siso@gmail.com", "123");
         final Venue venue = new Venue("공연장", "서울쓰");
         final Concert concert = new Concert(
                 "Rock Concert",
@@ -53,7 +53,7 @@ class ReservationTest {
     @Test
     void 예약의_이름_또는_주소가_null이라면_예외가_발생한다() {
         // Given
-        final Member member = new Member("siso");
+        final Member member = new Member("siso", "siso@gmail.com", "123");
         final Venue venue = new Venue("공연장", "서울쓰");
         final Concert concert = new Concert(
                 "Rock Concert",
