@@ -20,7 +20,7 @@ class PaymentTest {
         final String tid = "temp_tid_123";
         final Long amount = 10000L;
 
-        final Member member = new Member("siso");
+        final Member member = new Member("siso", "siso@gmail.com", "password");
         final Venue venue = new Venue("공연장", "서울쓰");
         final Concert concert = new Concert(
                 "Rock Concert",
@@ -50,7 +50,7 @@ class PaymentTest {
         final String tid = "temp_tid_123";
         final Long amount = 10000L;
 
-        final Member member = new Member("siso");
+        final Member member = new Member("siso", "siso@gmail.com", "password");
         final Venue venue = new Venue("공연장", "서울쓰");
         final Concert concert = new Concert(
                 "Rock Concert",
@@ -73,7 +73,7 @@ class PaymentTest {
         final String tid = "temp_tid_123";
         final Long amount = 10000L;
 
-        final Member member = new Member("siso");
+        final Member member = new Member("siso", "siso@gmail.com", "password");
         final Venue venue = new Venue("공연장", "서울쓰");
         final Concert concert = new Concert(
                 "Rock Concert",

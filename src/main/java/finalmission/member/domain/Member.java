@@ -6,7 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +16,8 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Member {
 
+    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +25,6 @@ public class Member {
     @Column(nullable = false, length = 50)
     private String name;
 
-    @Email
     @Column(nullable = false, length = 50, unique = true)
     private String email;
 
@@ -48,6 +48,9 @@ public class Member {
         }
         if (email == null || email.isBlank()) {
             throw new InvalidInputException("이메일은 null이거나 빈 값일 수 없습니다.");
+        }
+        if (!email.matches(EMAIL_REGEX)) {
+            throw new InvalidInputException("이메일 형식이 올바르지 않습니다.");
         }
         if (password == null || password.isBlank()) {
             throw new InvalidInputException("비밀번호는 null이거나 빈 값일 수 없습니다.");

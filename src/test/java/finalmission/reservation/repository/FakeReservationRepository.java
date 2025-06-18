@@ -34,6 +34,13 @@ public class FakeReservationRepository implements ReservationRepository {
     }
 
     @Override
+    public List<Reservation> findByMemberId(final Long memberId) {
+        return reservations.stream()
+                .filter(reservation -> reservation.getMember().getId().equals(memberId))
+                .toList();
+    }
+
+    @Override
     public boolean existsByConcertAndSeat(final Concert concert, final Seat seat) {
         return reservations.stream()
                 .anyMatch(reservation -> reservation.getConcert().equals(concert) && reservation.getSeat().equals(seat));
