@@ -1,6 +1,7 @@
 package finalmission.seat.repository;
 
 import finalmission.seat.domain.Seat;
+import finalmission.seat.repository.vo.SeatWithReserved;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,5 +30,13 @@ class FakeSeatRepository implements SeatRepository {
     @Override
     public List<Seat> findAll() {
         return new ArrayList<>(seats);
+    }
+
+    @Override
+    public List<SeatWithReserved> findSeatsWithReservationStatusByIds(final Long venueId, final Long concertId) {
+        return seats.stream()
+                .filter(seat -> seat.getVenue().getId().equals(venueId))
+                .map(seat -> new SeatWithReserved(seat.getId(), seat.getSeatNumber(), false))
+                .toList();
     }
 }
