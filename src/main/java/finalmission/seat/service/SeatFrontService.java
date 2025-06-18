@@ -63,6 +63,5 @@ public class SeatFrontService {
     public List<SeatWithReserved> getSeatsWithReserved(final Long concertId) {
         final Concert concert = concertQueryService.get(concertId);
         return seatQueryService.getSeatsWithReserved(concert);
-
     }
 }

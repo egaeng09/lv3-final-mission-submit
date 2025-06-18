@@ -2,10 +2,10 @@ package finalmission.reservation.service.detail;
 
 import finalmission.common.exception.NotFoundException;
 import finalmission.concert.domain.Concert;
+import finalmission.reservation.controller.dto.ReservationDetailResponse;
 import finalmission.reservation.domain.Reservation;
 import finalmission.reservation.repository.ReservationRepository;
 import finalmission.seat.domain.Seat;
-import java.util.Collection;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class ReservationQueryService {
         return reservationRepository.existsByConcertAndSeat(concert, seat);
     }
 
-    public List<Reservation> getByMemberId(final Long memberId) {
-        return reservationRepository.findByMemberId(memberId);
+    public List<ReservationDetailResponse> getDetailByMemberId(final Long memberId) {
+        return reservationRepository.findDetailsByMemberId(memberId);
     }
 }

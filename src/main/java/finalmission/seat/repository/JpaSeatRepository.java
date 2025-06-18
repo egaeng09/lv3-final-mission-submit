@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 public interface JpaSeatRepository extends JpaRepository<Seat, Long>, SeatRepository {
 
     @Query("""
-        SELECT new finalmission.seat.dto.SeatWithReserved(
+        SELECT new finalmission.seat.repository.vo.SeatWithReserved(
             s.id,
             s.seatNumber,
             EXISTS (SELECT r FROM Reservation r WHERE r.seat.id = s.id AND r.concert.id = :concertId)
