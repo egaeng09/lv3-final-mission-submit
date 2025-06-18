@@ -1,5 +1,6 @@
 package finalmission.venue.domain;
 
+import finalmission.common.exception.InvalidInputException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatNoException;
@@ -44,19 +45,19 @@ class VenueTest {
         // When & Then
         assertSoftly(softAssertions -> {
             softAssertions.assertThatThrownBy(() -> new Venue(nullValue, address))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("이름은 null이거나 빈 값일 수 없습니다.");
 
             softAssertions.assertThatThrownBy(() -> new Venue(name, nullValue))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("주소는 null이거나 빈 값일 수 없습니다.");
 
             softAssertions.assertThatThrownBy(() -> new Venue(emptyValue, address))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("이름은 null이거나 빈 값일 수 없습니다.");
 
             softAssertions.assertThatThrownBy(() -> new Venue(name, emptyValue))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("주소는 null이거나 빈 값일 수 없습니다.");
         });
     }

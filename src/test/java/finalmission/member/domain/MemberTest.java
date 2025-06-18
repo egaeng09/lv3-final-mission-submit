@@ -1,5 +1,6 @@
 package finalmission.member.domain;
 
+import finalmission.common.exception.InvalidInputException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,10 +39,10 @@ class MemberTest {
         // When & Then
         assertSoftly(softAssertions -> {
             softAssertions.assertThatThrownBy(() -> new Member(nullValue))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("이름은 null이거나 빈 값일 수 없습니다.");
             softAssertions.assertThatThrownBy(() -> new Member(emptyValue))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("이름은 null이거나 빈 값일 수 없습니다.");
         });
     }

@@ -1,5 +1,6 @@
 package finalmission.reservation.service;
 
+import finalmission.common.exception.AlreadyExistException;
 import finalmission.concert.domain.Concert;
 import finalmission.concert.service.detail.ConcertQueryService;
 import finalmission.member.domain.Member;
@@ -37,7 +38,7 @@ public class ReservationFrontService {
         final Seat seat = seatQueryService.get(request.seatId());
 
         if (reservationQueryService.existsByConcertAndSeat(concert, seat)) {
-            throw new IllegalArgumentException("이미 예약된 좌석입니다.");
+            throw new AlreadyExistException("이미 예약된 좌석입니다.");
         }
 
         final Reservation reservation = new Reservation(member, concert, seat);

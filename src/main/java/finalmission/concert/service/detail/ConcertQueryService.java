@@ -1,5 +1,6 @@
 package finalmission.concert.service.detail;
 
+import finalmission.common.exception.InvalidInputException;
 import finalmission.concert.domain.Concert;
 import finalmission.concert.repository.ConcertRepository;
 import java.util.List;
@@ -14,7 +15,7 @@ public class ConcertQueryService {
 
     public Concert get(Long id) {
         return concertRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("ID에 해당하는 콘서트를 찾을 수 없습니다."));
+                .orElseThrow(() -> new InvalidInputException("ID에 해당하는 콘서트를 찾을 수 없습니다."));
     }
 
     public List<Concert> getAll() {

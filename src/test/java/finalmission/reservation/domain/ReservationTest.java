@@ -1,5 +1,6 @@
 package finalmission.reservation.domain;
 
+import finalmission.common.exception.InvalidInputException;
 import finalmission.concert.domain.Concert;
 import finalmission.member.domain.Member;
 import finalmission.seat.domain.Seat;
@@ -67,13 +68,13 @@ class ReservationTest {
         // When & Then
         assertSoftly(softAssertions -> {
             softAssertions.assertThatThrownBy(() -> new Reservation(null, concert, seat))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("예약자는 null일 수 없습니다.");
             softAssertions.assertThatThrownBy(() -> new Reservation(member, null, seat))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("공연은 null일 수 없습니다.");
             softAssertions.assertThatThrownBy(() -> new Reservation(member, concert, null))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("좌석은 null일 수 없습니다.");
         });
     }

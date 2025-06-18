@@ -1,5 +1,6 @@
 package finalmission.payment.domain;
 
+import finalmission.common.exception.InvalidInputException;
 import finalmission.concert.domain.Concert;
 import finalmission.member.domain.Member;
 import finalmission.reservation.domain.Reservation;
@@ -88,13 +89,13 @@ class PaymentTest {
         // When & Then
         assertSoftly(softAssertions -> {
             softAssertions.assertThatThrownBy(() -> new Payment(null, amount, reservation))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("tid는 null이거나 빈 값일 수 없습니다.");
             softAssertions.assertThatThrownBy(() -> new Payment(tid, 0L, reservation))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("amount는 0보다 커야 합니다.");
             softAssertions.assertThatThrownBy(() -> new Payment(tid, amount, null))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("reservation은 null일 수 없습니다.");
         });
     }

@@ -1,5 +1,6 @@
 package finalmission.payment.domain;
 
+import finalmission.common.exception.InvalidInputException;
 import finalmission.reservation.domain.Reservation;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -56,13 +57,13 @@ public class Payment {
 
     public void validate(final String tid, final Long amount, final Reservation reservation) {
         if (tid == null || tid.isEmpty()) {
-            throw new IllegalArgumentException("tid는 null이거나 빈 값일 수 없습니다.");
+            throw new InvalidInputException("tid는 null이거나 빈 값일 수 없습니다.");
         }
         if (amount <= 0) {
-            throw new IllegalArgumentException("amount는 0보다 커야 합니다.");
+            throw new InvalidInputException("amount는 0보다 커야 합니다.");
         }
         if (reservation == null) {
-            throw new IllegalArgumentException("reservation은 null일 수 없습니다.");
+            throw new InvalidInputException("reservation은 null일 수 없습니다.");
         }
     }
 }

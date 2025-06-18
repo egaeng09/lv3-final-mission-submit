@@ -1,5 +1,6 @@
 package finalmission.seat.domain;
 
+import finalmission.common.exception.InvalidInputException;
 import finalmission.venue.domain.Venue;
 import org.junit.jupiter.api.Test;
 
@@ -46,15 +47,15 @@ class SeatTest {
         // When & Then
         assertSoftly(softAssertions -> {
             softAssertions.assertThatThrownBy(() -> new Seat(minusValue, venue))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("좌석 번호는 null이거나 0 이하일 수 없습니다.");
 
             softAssertions.assertThatThrownBy(() -> new Seat(zeroValue, venue))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("좌석 번호는 null이거나 0 이하일 수 없습니다.");
 
             softAssertions.assertThatThrownBy(() -> new Seat(seatNumber, nullValue))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("공연장은 null일 수 없습니다.");
         });
     }

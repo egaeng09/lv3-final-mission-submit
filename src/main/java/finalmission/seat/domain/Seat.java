@@ -1,5 +1,6 @@
 package finalmission.seat.domain;
 
+import finalmission.common.exception.InvalidInputException;
 import finalmission.venue.domain.Venue;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,10 +37,10 @@ public class Seat {
 
     private void validate(final Integer seatNumber, final Venue venue) {
         if (seatNumber == null || seatNumber <= 0) {
-            throw new IllegalArgumentException("좌석 번호는 null이거나 0 이하일 수 없습니다.");
+            throw new InvalidInputException("좌석 번호는 null이거나 0 이하일 수 없습니다.");
         }
         if (venue == null) {
-            throw new IllegalArgumentException("공연장은 null일 수 없습니다.");
+            throw new InvalidInputException("공연장은 null일 수 없습니다.");
         }
     }
 }

@@ -1,5 +1,6 @@
 package finalmission.reservation.service.detail;
 
+import finalmission.common.exception.NotFoundException;
 import finalmission.concert.domain.Concert;
 import finalmission.reservation.domain.Reservation;
 import finalmission.reservation.repository.ReservationRepository;
@@ -16,7 +17,7 @@ public class ReservationQueryService {
 
     public Reservation get(Long id) {
         return reservationRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("ID에 해당하는 예약을 찾을 수 없습니다."));
+                .orElseThrow(() -> new NotFoundException("ID에 해당하는 예약을 찾을 수 없습니다."));
     }
 
     public List<Reservation> getAll() {
