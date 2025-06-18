@@ -1,5 +1,6 @@
 package finalmission.member.controller;
 
+import finalmission.member.auth.annotation.PermitAll;
 import finalmission.member.controller.dto.LoginRequest;
 import finalmission.member.controller.dto.SignupRequest;
 import finalmission.member.controller.dto.MemberResponse;
@@ -17,11 +18,13 @@ public class AuthController {
 
     private final AuthService authService;
 
+    @PermitAll
     @PostMapping("/signup")
     public ResponseEntity<MemberResponse> signup(@RequestBody final SignupRequest request) {
         return ResponseEntity.ok(authService.signup(request));
     }
 
+    @PermitAll
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest) {
         final String token = authService.login(loginRequest);

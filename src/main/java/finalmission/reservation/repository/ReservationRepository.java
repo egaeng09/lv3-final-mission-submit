@@ -14,5 +14,7 @@ public interface ReservationRepository {
 
     List<Reservation> findAll();
 
+    List<Reservation> findByMemberId(Long memberId);
+
     boolean existsByConcertAndSeat(Concert concert, Seat seat);
 }

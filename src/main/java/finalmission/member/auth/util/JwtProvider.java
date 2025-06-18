@@ -1,4 +1,4 @@
-package finalmission.member.service.util;
+package finalmission.member.auth.util;
 
 import finalmission.member.domain.Member;
 import io.jsonwebtoken.Jwts;

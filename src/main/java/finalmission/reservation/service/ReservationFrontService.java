@@ -3,6 +3,7 @@ package finalmission.reservation.service;
 import finalmission.common.exception.AlreadyExistException;
 import finalmission.concert.domain.Concert;
 import finalmission.concert.service.detail.ConcertQueryService;
+import finalmission.member.auth.vo.MemberInfo;
 import finalmission.member.domain.Member;
 import finalmission.member.service.detail.MemberQueryService;
 import finalmission.payment.service.PaymentFrontService;
@@ -32,8 +33,8 @@ public class ReservationFrontService {
     private final PaymentFrontService paymentFrontService;
 
     @Transactional
-    public ReservationResponse create(final ReservationRequest request) {
-        final Member member = memberQueryService.get(request.memberId());
+    public ReservationResponse create(final MemberInfo memberInfo, final ReservationRequest request) {
+        final Member member = memberQueryService.get(memberInfo.id());
         final Concert concert = concertQueryService.get(request.concertId());
         final Seat seat = seatQueryService.get(request.seatId());
 
@@ -73,6 +74,17 @@ public class ReservationFrontService {
 
     public List<ReservationResponse> getAll() {
         return reservationQueryService.getAll().stream()
+                .map(reservation -> new ReservationResponse(
+                        reservation.getId(),
+                        reservation.getMember().getId(),
+                        reservation.getConcert().getId(),
+                        reservation.getSeat().getId()
+                ))
+                .toList();
+    }
+
+    public List<ReservationResponse> get(final MemberInfo memberInfo) {
+        return reservationQueryService.getByMemberId(memberInfo.id()).stream()
                 .map(reservation -> new ReservationResponse(
                         reservation.getId(),
                         reservation.getMember().getId(),

@@ -1,13 +1,14 @@
 package finalmission.member.service;
 
+import finalmission.member.auth.util.JwtExtractor;
+import finalmission.member.auth.util.JwtProvider;
+import finalmission.member.auth.vo.MemberInfo;
 import finalmission.member.controller.dto.LoginRequest;
 import finalmission.member.controller.dto.MemberResponse;
 import finalmission.member.controller.dto.SignupRequest;
 import finalmission.member.domain.Member;
 import finalmission.member.service.detail.MemberCommandService;
 import finalmission.member.service.detail.MemberQueryService;
-import finalmission.member.service.util.JwtExtractor;
-import finalmission.member.service.util.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +42,13 @@ public class AuthService {
         return jwtProvider.generate(member);
     }
 
-    public Member get(final String token) {
+    public MemberInfo get(final String token) {
         Long memberId = jwtExtractor.extractMemberId(token);
-        return memberQueryService.get(memberId);
+        final Member member = memberQueryService.get(memberId);
+        return new MemberInfo(
+                member.getId(),
+                member.getEmail(),
+                member.getName()
+        );
     }
 }
