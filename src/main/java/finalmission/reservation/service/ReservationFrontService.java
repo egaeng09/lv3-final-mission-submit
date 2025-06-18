@@ -37,8 +37,8 @@ public class ReservationFrontService {
     private final PaymentFrontService paymentFrontService;
 
     @Transactional
-    public ReservationResponse create(final MemberInfo memberInfo, final ReservationRequest request) {
-        final Member member = memberQueryService.get(memberInfo.id());
+    public ReservationResponse create(final Long memberId, final ReservationRequest request) {
+        final Member member = memberQueryService.get(memberId);
         final Concert concert = concertQueryService.get(request.concertId());
         final Seat seat = seatQueryService.get(request.seatId());
 
@@ -87,8 +87,8 @@ public class ReservationFrontService {
                 .toList();
     }
 
-    public List<ReservationDetailResponse> get(final MemberInfo memberInfo) {
-        return reservationQueryService.getDetailByMemberId(memberInfo.id());
+    public List<ReservationDetailResponse> getDetails(final Long memberId) {
+        return reservationQueryService.getDetailsByMemberId(memberId);
     }
 
     public ReservationResponse update(final MemberInfo memberInfo, final ReservationChangeRequest request) {

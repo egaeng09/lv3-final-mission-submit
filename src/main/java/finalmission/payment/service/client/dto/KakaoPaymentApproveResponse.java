@@ -23,14 +23,3 @@ public record KakaoPaymentApproveResponse(
         return amount.total();
     }
 }
-
-record KakaoPayAmount(
-        int total,
-        int tax_free,
-        int vat,
-        int point,
-        int discount,
-        int green_deemed_amount
-) {
-
-}

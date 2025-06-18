@@ -29,7 +29,7 @@ public class ReservationQueryService {
         return reservationRepository.existsByConcertAndSeat(concert, seat);
     }
 
-    public List<ReservationDetailResponse> getDetailByMemberId(final Long memberId) {
+    public List<ReservationDetailResponse> getDetailsByMemberId(final Long memberId) {
         return reservationRepository.findDetailsByMemberId(memberId);
     }
 }
