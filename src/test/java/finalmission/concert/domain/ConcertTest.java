@@ -1,5 +1,6 @@
 package finalmission.concert.domain;
 
+import finalmission.common.exception.InvalidInputException;
 import finalmission.concert.domain.Concert;
 import finalmission.venue.domain.Venue;
 import java.time.LocalDateTime;
@@ -63,23 +64,23 @@ class ConcertTest {
         // When & Then
         assertSoftly(softAssertions -> {
             softAssertions.assertThatThrownBy(() -> new Concert(nullValue, artist, concertDate, venue, price, description))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("제목은 null이거나 빈 값일 수 없습니다.");
 
             softAssertions.assertThatThrownBy(() -> new Concert(title, nullValue, concertDate, venue, price, description))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("아티스트는 null이거나 빈 값일 수 없습니다.");
 
             softAssertions.assertThatThrownBy(() -> new Concert(title, artist, concertDate, null, price, description))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("공연장은 null일 수 없습니다.");
 
             softAssertions.assertThatThrownBy(() -> new Concert(title, artist, concertDate, venue, 0L, description))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("가격은 0보다 커야 합니다.");
 
             softAssertions.assertThatThrownBy(() -> new Concert(title, artist, concertDate, venue, price, emptyValue))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(InvalidInputException.class)
                     .hasMessageContaining("설명은 null이거나 빈 값일 수 없습니다.");
         });
     }

@@ -1,5 +1,6 @@
 package finalmission.concert.domain;
 
+import finalmission.common.exception.InvalidInputException;
 import finalmission.venue.domain.Venue;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -55,22 +56,22 @@ public class Concert {
     private void validate(final String title, final String artist, final LocalDateTime concertDate, final Venue venue,
                           final Long price, final String description) {
         if (title == null || title.isBlank()) {
-            throw new IllegalArgumentException("제목은 null이거나 빈 값일 수 없습니다.");
+            throw new InvalidInputException("제목은 null이거나 빈 값일 수 없습니다.");
         }
         if (artist == null || artist.isBlank()) {
-            throw new IllegalArgumentException("아티스트는 null이거나 빈 값일 수 없습니다.");
+            throw new InvalidInputException("아티스트는 null이거나 빈 값일 수 없습니다.");
         }
         if (concertDate == null) {
-            throw new IllegalArgumentException("공연 날짜는 null일 수 없습니다.");
+            throw new InvalidInputException("공연 날짜는 null일 수 없습니다.");
         }
         if (venue == null) {
-            throw new IllegalArgumentException("공연장은 null일 수 없습니다.");
+            throw new InvalidInputException("공연장은 null일 수 없습니다.");
         }
         if (price <= 0) {
-            throw new IllegalArgumentException("가격은 0보다 커야 합니다.");
+            throw new InvalidInputException("가격은 0보다 커야 합니다.");
         }
         if (description == null || description.isBlank()) {
-            throw new IllegalArgumentException("설명은 null이거나 빈 값일 수 없습니다.");
+            throw new InvalidInputException("설명은 null이거나 빈 값일 수 없습니다.");
         }
     }
 }

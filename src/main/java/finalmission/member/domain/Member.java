@@ -1,5 +1,6 @@
 package finalmission.member.domain;
 
+import finalmission.common.exception.InvalidInputException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class Member {
 
     private void validate(final String name) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("이름은 null이거나 빈 값일 수 없습니다.");
+            throw new InvalidInputException("이름은 null이거나 빈 값일 수 없습니다.");
         }
     }
 }

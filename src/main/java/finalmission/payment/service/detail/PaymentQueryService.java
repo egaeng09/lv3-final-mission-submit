@@ -1,5 +1,7 @@
 package finalmission.payment.service.detail;
 
+import finalmission.common.exception.InvalidInputException;
+import finalmission.common.exception.NotFoundException;
 import finalmission.payment.domain.Payment;
 import finalmission.payment.repository.PaymentRepository;
 import finalmission.reservation.domain.Reservation;
@@ -16,7 +18,7 @@ public class PaymentQueryService {
 
     public Payment get(Long id) {
         return paymentRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("ID에 해당하는 결제 내역을 찾을 수 없습니다."));
+                .orElseThrow(() -> new NotFoundException("ID에 해당하는 결제 내역을 찾을 수 없습니다."));
     }
 
     public List<Payment> getAll() {

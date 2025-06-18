@@ -1,5 +1,6 @@
 package finalmission.reservation.domain;
 
+import finalmission.common.exception.InvalidInputException;
 import finalmission.concert.domain.Concert;
 import finalmission.member.domain.Member;
 import finalmission.seat.domain.Seat;
@@ -41,13 +42,13 @@ public class Reservation {
 
     private void validate(final Member member, final Concert concert, final Seat seat) {
         if (member == null) {
-            throw new IllegalArgumentException("예약자는 null일 수 없습니다.");
+            throw new InvalidInputException("예약자는 null일 수 없습니다.");
         }
         if (concert == null) {
-            throw new IllegalArgumentException("공연은 null일 수 없습니다.");
+            throw new InvalidInputException("공연은 null일 수 없습니다.");
         }
         if (seat == null) {
-            throw new IllegalArgumentException("좌석은 null일 수 없습니다.");
+            throw new InvalidInputException("좌석은 null일 수 없습니다.");
         }
     }
 }
