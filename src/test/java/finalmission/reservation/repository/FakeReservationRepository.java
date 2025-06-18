@@ -63,4 +63,9 @@ public class FakeReservationRepository implements ReservationRepository {
         return reservations.stream()
                 .anyMatch(reservation -> reservation.getConcert().equals(concert) && reservation.getSeat().equals(seat));
     }
+
+    @Override
+    public void delete(final Reservation reservation) {
+        reservations.remove(reservation);
+    }
 }

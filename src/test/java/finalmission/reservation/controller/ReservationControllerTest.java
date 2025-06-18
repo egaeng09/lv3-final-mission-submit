@@ -4,6 +4,8 @@ import finalmission.member.controller.dto.LoginRequest;
 import finalmission.member.service.AuthService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,5 +72,21 @@ class ReservationControllerTest {
                 .then().log().all()
                 .statusCode(200)
                 .body("size()", is(1));
+    }
+
+    @Test
+    void 좌석을_변경한다() {
+        final Map<Object, Object> params = new HashMap<>();
+        params.put("reservationId", 1);
+        params.put("seatNumber", 3);
+
+        RestAssured.given().log().all()
+                .cookie("token", memberToken)
+                .contentType(ContentType.JSON)
+                .body(params)
+                .when().put("/reservations")
+                .then().log().all()
+                .statusCode(200)
+                .body("seatId", is(3));
     }
 }

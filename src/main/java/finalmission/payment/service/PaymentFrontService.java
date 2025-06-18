@@ -8,6 +8,7 @@ import finalmission.payment.domain.Payment;
 import finalmission.payment.service.client.KakaoPaymentClient;
 import finalmission.payment.service.client.dto.KakaoPaymentApproveRequest;
 import finalmission.payment.service.client.dto.KakaoPaymentApproveResponse;
+import finalmission.payment.service.client.dto.KakaoPaymentCancelRequest;
 import finalmission.payment.service.client.dto.KakaoPaymentReadyRequest;
 import finalmission.payment.service.client.dto.KakaoPaymentReadyResponse;
 import finalmission.payment.service.detail.PaymentCommandService;
@@ -87,6 +88,21 @@ public class PaymentFrontService {
                 savedPayment.getTid(),
                 savedPayment.getAmount()
         );
+    }
+
+    public void cancel(final Long reservationId) {
+        final Payment payment = paymentQueryService.getByReservationId(reservationId);
+
+        final KakaoPaymentCancelRequest cancelRequest = new KakaoPaymentCancelRequest(
+                CID,
+                payment.getTid(),
+                payment.getAmount().intValue(),
+                0
+        );
+
+        kakaoPaymentClient.cancel(cancelRequest);
+
+        paymentCommandService.delete(payment);
     }
 
     public PaymentApproveResponse get(Long id) {

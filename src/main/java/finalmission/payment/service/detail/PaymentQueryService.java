@@ -24,4 +24,9 @@ public class PaymentQueryService {
     public List<Payment> getAll() {
         return paymentRepository.findAll();
     }
+
+    public Payment getByReservationId(final Long reservationId) {
+        return paymentRepository.findByReservationId(reservationId)
+                .orElseThrow(() -> new NotFoundException("해당 예약에 대한 결제 내역을 찾을 수 없습니다."));
+    }
 }

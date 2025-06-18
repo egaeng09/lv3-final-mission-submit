@@ -2,6 +2,7 @@ package finalmission.payment.service.client;
 
 import finalmission.payment.service.client.dto.KakaoPaymentApproveRequest;
 import finalmission.payment.service.client.dto.KakaoPaymentApproveResponse;
+import finalmission.payment.service.client.dto.KakaoPaymentCancelRequest;
 import finalmission.payment.service.client.dto.KakaoPaymentReadyRequest;
 import finalmission.payment.service.client.dto.KakaoPaymentReadyResponse;
 import lombok.RequiredArgsConstructor;
@@ -35,5 +36,14 @@ public class KakaoPaymentClient {
                 .body(request)
                 .retrieve()
                 .body(KakaoPaymentApproveResponse.class);
+    }
+
+    public void cancel(final KakaoPaymentCancelRequest request) {
+        restClient.post().uri("/cancel")
+                .header("Authorization", "SECRET_KEY " + SECRET_KEY)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(request)
+                .retrieve()
+                .body(Void.class);
     }
 }
