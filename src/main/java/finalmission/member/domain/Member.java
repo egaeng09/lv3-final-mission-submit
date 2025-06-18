@@ -1,7 +1,9 @@
 package finalmission.member.domain;
 
 import finalmission.common.exception.InvalidInputException;
+import finalmission.member.domain.utils.RoleConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,11 +33,20 @@ public class Member {
     @Column(nullable = false, length = 50)
     private String password;
 
+    @Convert(converter = RoleConverter.class)
+    @Column(nullable = false)
+    private Role role;
+
     public Member(final String name, final String email, final String password) {
         validate(name, email, password);
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = Role.MEMBER;
+    }
+
+    public boolean isAdmin() {
+        return this.role == Role.ADMIN;
     }
 
     private void validate(

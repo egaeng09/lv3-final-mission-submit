@@ -1,12 +1,11 @@
 package finalmission.seat.controller;
 
+import finalmission.member.auth.annotation.RoleRequired;
+import finalmission.member.domain.Role;
 import finalmission.seat.controller.dto.SeatRequest;
 import finalmission.seat.controller.dto.SeatResponse;
 import finalmission.seat.repository.vo.SeatWithReserved;
 import finalmission.seat.service.SeatFrontService;
-import finalmission.venue.controller.dto.VenueRequest;
-import finalmission.venue.controller.dto.VenueResponse;
-import finalmission.venue.service.VenueFrontService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +24,7 @@ public class SeatController {
 
     private final SeatFrontService seatFrontService;
 
+    @RoleRequired(value = Role.ADMIN)
     @PostMapping
     public ResponseEntity<SeatResponse> createSeat(@RequestBody final SeatRequest request) {
         return ResponseEntity.ok(seatFrontService.create(request));
@@ -35,7 +35,7 @@ public class SeatController {
         return ResponseEntity.ok(seatFrontService.get(id));
     }
 
-    @GetMapping
+    @GetMapping("/concert")
     public ResponseEntity<List<SeatWithReserved>> getSeats(@RequestParam final Long concertId) {
         return ResponseEntity.ok(seatFrontService.getSeatsWithReserved(concertId));
     }

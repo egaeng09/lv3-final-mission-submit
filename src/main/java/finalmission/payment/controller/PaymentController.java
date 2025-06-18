@@ -1,9 +1,10 @@
-package finalmission.payment.controller.dto;
+package finalmission.payment.controller;
 
+import finalmission.payment.controller.dto.PaymentReadyRequest;
+import finalmission.payment.controller.dto.PaymentReadyResponse;
 import finalmission.payment.service.PaymentFrontService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
