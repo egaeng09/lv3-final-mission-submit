@@ -13,7 +13,7 @@ jobs:
     runs-on: [ self-hosted, dev ]
     defaults:
       run:
-        working-directory: .
+        working-directory: ./lv3-final-mission
 
     steps:
       - name: 최신 커밋 내역 checkout
