@@ -1,0 +1,72 @@
+name: PROD CI/CD
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: [ self-hosted, main ]
+    defaults:
+      run:
+        working-directory: .
+
+    steps:
+      - name: 최신 커밋 내역 checkout
+        uses: actions/checkout@v4
+
+      - name: 애플리케이션 빌드 및 실행
+        env:
+          APPLICATION_PROD_PROPERTIES: ${{ secrets.APPLICATION_PROD_PROPERTIES }}
+        run: |
+          echo "=== JAR 빌드 시작 ==="
+          rm -rf src/main/resources/application-main.properties
+          echo "$APPLICATION_MAIN_PROPERTIES" > src/main/resources/application-main.properties
+          
+          # 1. Gradle 빌드
+          ./gradlew --no-build-cache clean build -x test --refresh-dependencies
+          if [ $? -ne 0 ]; then
+            echo "빌드 실패"
+            exit 1
+          fi
+
+          JAR_PATH=$(ls build/libs/*SNAPSHOT.jar | head -n 1)
+          if [ ! -f "$JAR_PATH" ]; then
+            echo "JAR 파일이 없습니다: $JAR_PATH"
+            exit 1
+          fi
+
+          # 2. 기존 애플리케이션 종료
+          echo "=== 실행 중인 앱 종료 ==="
+          PID=$(pgrep -f 'java -jar.*springboot-app.jar' || true)
+          if [ -n "$PID" ]; then
+            kill -15 $PID
+            echo "→ 종료 완료 (PID: $PID)"
+            sleep 5
+          fi
+
+          # 3. 새 JAR 배포
+          sudo mkdir -p /opt/springboot-app
+          sudo cp "$JAR_PATH" /opt/springboot-app/springboot-app.jar
+
+          # 4. 새 앱 실행 (nohup)
+          echo "=== 앱 실행 ==="
+          mkdir -p ./logs
+          RUNNER_TRACKING_ID="" && nohup java -jar \
+            -Duser.timezone=Asia/Seoul \
+            -Dspring.profiles.active=main \
+            /opt/springboot-app/springboot-app.jar \
+            > ./logs/nohup.log 2>&1 &
+
+          sleep 3
+          NEW_PID=$(pgrep -f 'java -jar.*springboot-app.jar' || true)
+          if [ -n "$NEW_PID" ]; then
+            echo "앱 실행 성공 (PID: $NEW_PID)"
+          else
+            echo "앱 실행 실패. 로그 확인: ./logs/app.log"
+            exit 1
+          fi
