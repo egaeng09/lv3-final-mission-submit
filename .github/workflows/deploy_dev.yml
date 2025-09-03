@@ -18,27 +18,31 @@ jobs:
 
       - name: 애플리케이션 빌드 및 실행
         env:
-          APPLICATION_PROD_PROPERTIES: ${{ secrets.APPLICATION_PROD_PROPERTIES }}
+          APPLICATION_DEV_PROPERTIES: ${{ secrets.APPLICATION_DEV_PROPERTIES }}
         run: |
-          echo "=== JAR 빌드 시작 ==="
-          rm -rf src/main/resources/application-dev.properties
+          echo "=== 프로젝트 디렉토리 이동 ==="
+          cd $GITHUB_WORKSPACE  # actions-runner _work/lv3-final-mission/lv3-final-mission
+
+          echo "=== application-dev.properties 설정 ==="
+          rm -f src/main/resources/application-dev.properties
           echo "$APPLICATION_DEV_PROPERTIES" > src/main/resources/application-dev.properties
-          
-          # 1. Gradle 빌드
+
+          echo "=== JAR 빌드 시작 ==="
           ./gradlew --no-build-cache clean build -x test --refresh-dependencies
           if [ $? -ne 0 ]; then
             echo "빌드 실패"
             exit 1
           fi
 
-          JAR_PATH=$(ls build/libs/*SNAPSHOT.jar | head -n 1)
+          # 실행용 JAR 선택 (plain 제외)
+          JAR_PATH=$(ls build/libs/*-SNAPSHOT.jar | grep -v plain | head -n 1)
           if [ ! -f "$JAR_PATH" ]; then
             echo "JAR 파일이 없습니다: $JAR_PATH"
             exit 1
           fi
+          echo "→ 선택된 JAR: $JAR_PATH"
 
-          # 2. 기존 애플리케이션 종료
-          echo "=== 실행 중인 앱 종료 ==="
+          echo "=== 기존 애플리케이션 종료 ==="
           PID=$(pgrep -f 'java -jar.*springboot-app.jar' || true)
           if [ -n "$PID" ]; then
             kill -15 $PID
@@ -46,14 +50,13 @@ jobs:
             sleep 5
           fi
 
-          # 3. 새 JAR 배포
+          echo "=== 새 JAR 배포 ==="
           sudo mkdir -p /opt/springboot-app
           sudo cp "$JAR_PATH" /opt/springboot-app/springboot-app.jar
 
-          # 4. 새 앱 실행 (nohup)
           echo "=== 앱 실행 ==="
           mkdir -p ./logs
-          RUNNER_TRACKING_ID="" && nohup java -jar \
+          nohup java -jar \
             -Duser.timezone=Asia/Seoul \
             -Dspring.profiles.active=dev \
             /opt/springboot-app/springboot-app.jar \
@@ -64,6 +67,6 @@ jobs:
           if [ -n "$NEW_PID" ]; then
             echo "앱 실행 성공 (PID: $NEW_PID)"
           else
-            echo "앱 실행 실패. 로그 확인: ./logs/app.log"
+            echo "앱 실행 실패. 로그 확인: ./logs/nohup.log"
             exit 1
           fi
