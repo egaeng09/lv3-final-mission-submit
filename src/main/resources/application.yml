@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: lv3-final-mission
+  profiles:
+    group:
+      dev: dev, key
+      prod: prod, key
+      default: dev
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    defer-datasource-initialization: true
+
+jwt:
+  expiration: 360000
